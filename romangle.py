@@ -19,7 +19,7 @@ def run():
 						items.append('[--%s=VALUE]' % arg)
 					else:
 						items.append('--%s=VALUE' % arg)
-				print('Usage: rom8tool %s %s' % (k[4:], ' '.join(items)))
+				print('Usage: romangle %s %s' % (k[4:], ' '.join(items)))
 	else:
 		for k, func in list(globals().items()):
 			if k == 'cmd_' + sys.argv[1]:
@@ -168,7 +168,9 @@ def cmd_mangle(*, i, o = 'roms'):
 				wr.write(ROM8Tag.calcType, bytes([(CalcType.cwi if 'CY' in id else CalcType.cwii) | emuFlags]))
 				if 'faceSVG' in props:
 					svg = props['faceSVG'].decode()
+					svg = svg.replace('width="376" height="635"', 'width="375" height="635"')
 					assert 'width="375" height="635" viewBox="0 0 375 635"' in svg
+					
 					svg = svg.replace('width="375" height="635" viewBox="0 0 375 635"', 'width="750" height="1270" viewBox="0 0 375 635"')
 					wr.write(ROM8Tag.faceSVG, svg.encode())
 

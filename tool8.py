@@ -157,7 +157,7 @@ def run():
 						items.append('[--%s=VALUE]' % arg)
 					else:
 						items.append('--%s=VALUE' % arg)
-				print('Usage: rom8tool %s %s' % (k[4:], ' '.join(items)))
+				print('Usage: tool8 %s %s' % (k[4:], ' '.join(items)))
 	else:
 		for k, func in list(globals().items()):
 			if k == 'cmd_' + sys.argv[1]:
