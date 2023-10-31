@@ -59,6 +59,19 @@ class SpecialKeys(enum.IntFlag):
     up = 0xf8
     down = 0xf7
 
+ROM8_COMPAT_MAP = {
+	'pitust,1': {
+		2: ROM8Tag.prop,
+		3: ROM8Tag.rom,
+		4: ROM8Tag.faceSVG,
+		5: ROM8Tag.facePNG,
+		7: ROM8Tag.faceGUIKeys,
+		8: ROM8Tag.faceKeymap,
+		9: ROM8Tag.calcType,
+		10: ROM8Tag.faceKeybinds,
+	}
+}
+
 
 SUPPORTED_ROM8 = b'pitust,2'
 
@@ -67,7 +80,9 @@ def read8(data):
 		with open(data, 'rb') as fd:
 			data = fd.read()
 
+	typ8map = None
 	offs = 0
+	using_compat = '(error)'
 	while True:
 		typ, len = struct.unpack('<II', data[offs:offs + 8])
 		pay = data[offs + 8:offs + 8 + len]
@@ -75,9 +90,23 @@ def read8(data):
 		if typ == 0:
 			break
 
-		typ8 = ROM8Tag(typ)
-		if typ8 == ROM8Tag.compatible:
-			assert pay == SUPPORTED_ROM8
+		if typ8map:
+			if typ in typ8map:
+				typ8 = typ8map[typ]
+			else:
+				print('W: unsupported tag for compatible %s: %d' % (using_compat, typ))
+				continue
+		else:
+			typ8 = ROM8Tag(typ)
+		if typ8 == int(ROM8Tag.compatible):
+			if pay != SUPPORTED_ROM8:
+				compat = pay.decode()
+				if compat in ROM8_COMPAT_MAP:
+					typ8map = ROM8_COMPAT_MAP[compat]
+					print('W: using compatible %s' % compat)
+					using_compat = compat
+				else:
+					print('E: this version of tool8 does not support the compatbile %s' % compat)
 			continue
 
 		yield typ8, pay
