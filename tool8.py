@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+# tool8: a utility for manipulating rom8 files.
+
 import struct, re, enum, sys
 
 try:
