@@ -322,7 +322,11 @@ def cmd_keytest(*, rom, x, y):
 		kw, kw = int(kw), int(kw)
 		if kx <= x and x <= kx + kw and ky <= y and y <= ky + kh:
 			print(' + %s' % kc)
-
+def cmd_cat(*, i, o):
+	with write8(o) as w:
+		for ifile in i.split(','):
+			for t, pay in read8(ifile):
+				w.write(t, pay)
 def cmd_autogrid(*, x, y, w, h, ax, ay, half, out):
 	assert half in ['lower', 'upper']
 	dat = autogrid(int(x), int(y), int(w), int(h), int(ax), int(ay), half == 'upper')
