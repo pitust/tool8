@@ -361,8 +361,8 @@ def cmd_wrap_rom_emu(*, rom, face, dispx, dispy, dispscale, gridfiles = '', bind
 		if bfile:
 			bdata += open(bfile, 'rb').read()
 	with write8(out) as wr:
-		wr.prop('writer', 'tool8 (wwce)')
-		wr.prop('writer.repo', 'https://git.malwarez.xyz/~pitust/wwce')
+		wr.prop('writer', 'tool8')
+		wr.prop('writer.repo', 'https://github.com/pitust/tool8')
 		wr.prop('model', 'fx-83 GT+')
 		# (66, 139) 3x scale 96x31
 		if face[0:4] == b'\x89PNG':

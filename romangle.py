@@ -162,14 +162,13 @@ def cmd_mangle(*, i, o = 'roms'):
 				continue
 			with write8(rompath % (id + labelPath)) as wr:
 				wr.prop('model', id + emuLabel)
-				wr.prop('writer', 'romangle')
-				wr.prop('writer.repo', 'https://git.malwarez.xyz/~pitust/romangle')
+				wr.prop('writer', 'romangle (tool8)')
+				wr.prop('writer.repo', 'https://github.com/pitust/tool8')
 				wr.write(ROM8Tag.rom, props['rom'])
 				wr.write(ROM8Tag.calcType, bytes([(CalcType.cwi if 'CY' in id else CalcType.cwii) | emuFlags]))
 				if 'faceSVG' in props:
 					svg = props['faceSVG'].decode()
 					svg = svg.replace('width="376" height="635" viewBox="0 0 376 635"', 'width="375" height="635" viewBox="0 0 375 635"')
-					print(id, svg.split('\n')[0])
 					assert 'width="375" height="635" viewBox="0 0 375 635"' in svg
 					
 					svg = svg.replace('width="375" height="635" viewBox="0 0 375 635"', 'width="750" height="1270" viewBox="0 0 375 635"')
