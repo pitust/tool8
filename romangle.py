@@ -185,7 +185,7 @@ def cmd_mangle(*, i, o = 'roms'):
 						ki, ko = kio.split(',')
 						kc = fromkio(int(ki), int(ko))
 						if text.startswith('[') and text.endswith(']'):
-							text = key[1:-1]
+							text = text[1:-1]
 						keymap += bytes([kc]) + text.encode() + b'\x00'
 						if len(key) == 1:
 							keybinds += key.encode() + bytes([kc])
