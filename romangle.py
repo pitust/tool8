@@ -171,6 +171,8 @@ def cmd_mangle(*, i, o = 'roms'):
 				wr.write(ROM8Tag.calcType, bytes([(CalcType.cwi if 'CY' in id else CalcType.cwii) | emuFlags]))
 				if 'faceSVG' in props:
 					svg = props['faceSVG'].decode()
+					if 'width=' not in svg[:1000]:
+						svg = svg.replace('<svg version=', '<svg width="375" height="635" version=')
 					svg = svg.replace('width="376" height="635" viewBox="0 0 376 635"', 'width="375" height="635" viewBox="0 0 375 635"')
 					if 'width="375" height="635" viewBox="0 0 375 635"' in svg:
 						svg = svg.replace('width="375" height="635" viewBox="0 0 375 635"', 'width="750" height="1270" viewBox="0 0 375 635"')
