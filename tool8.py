@@ -7,6 +7,7 @@ try:
 	import chafa
 	from PIL import Image
 	import io
+	import importlib
 	can_draw_image = True
 	def draw_image(img):
 		img_pil = Image.open(io.BytesIO(img))
@@ -26,9 +27,16 @@ try:
 		    img_pil.width * 4
 		)
 		print(canvas.print(fallback = True).decode())
+	if importlib.find_loader('cairosvg'):
+		can_draw_svg = True
+		def draw_svg(svg):
+			from cairosvg import svg2png
+			draw_image(svg2png(svg))
+	else:
+		can_draw_svg = False
 
 except ImportError:
-	pass
+	can_draw_image = False
 class ROM8Tag(enum.IntEnum):
 	end = 0
 	compatible = enum.auto()
@@ -261,6 +269,12 @@ def cmd_show(*, file):
 				draw_image(data)
 			else:
 				print('- png face')
+		elif t == ROM8Tag.faceSVG:
+			if can_draw_svg:
+				print('- svg face:')
+				draw_svg(data)
+			else:
+				print('- svg face')
 		elif t == ROM8Tag.faceDisplayBounds:
 			x, y, w, h, scale = struct.unpack('<HHHH H', data)
 			print('- display bounds: (%d, %d) %dx%d scale %d' % (x, y, w, h, scale))
