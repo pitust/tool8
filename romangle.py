@@ -169,19 +169,20 @@ def cmd_mangle(*, i, o = 'roms'):
 				if 'faceSVG' in props:
 					svg = props['faceSVG'].decode()
 					svg = svg.replace('width="376" height="635" viewBox="0 0 376 635"', 'width="375" height="635" viewBox="0 0 375 635"')
-					assert 'width="375" height="635" viewBox="0 0 375 635"' in svg
-					
-					svg = svg.replace('width="375" height="635" viewBox="0 0 375 635"', 'width="750" height="1270" viewBox="0 0 375 635"')
-					wr.write(ROM8Tag.faceSVG, svg.encode())
+					if 'width="375" height="635" viewBox="0 0 375 635"' in svg:
+						svg = svg.replace('width="375" height="635" viewBox="0 0 375 635"', 'width="750" height="1270" viewBox="0 0 375 635"')
+						wr.write(ROM8Tag.faceSVG, svg.encode())
 
-					x, y = 80, 89
-					w, h = 192, 63
-					scale = 3
-					wr.write(ROM8Tag.faceDisplayBounds, struct.pack('<HHHH H', x, y, w, h, scale))
+						x, y = 80, 89
+						w, h = 192, 63
+						scale = 3
+						wr.write(ROM8Tag.faceDisplayBounds, struct.pack('<HHHH H', x, y, w, h, scale))
+					else:
+						print('W: no svg face for %s' % id)
 				if 'officialKeyNames' in props:
 					keybinds = b''
 					keymap = b''
-					for kio, (_, key, text) in json.loads(props['officialKeyNames']).items():
+					for kio, (_, key, text, *_) in json.loads(props['officialKeyNames']).items():
 						ki, ko = kio.split(',')
 						kc = fromkio(int(ki), int(ko))
 						if text.startswith('[') and text.endswith(']'):
