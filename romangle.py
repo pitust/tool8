@@ -175,7 +175,7 @@ def cmd_mangle(*, i, o = 'roms'):
 					wr.write(ROM8Tag.faceSVG, svg.encode())
 
 					x, y = 80, 89
-					w, h = 192, 64
+					w, h = 192, 63
 					scale = 3
 					wr.write(ROM8Tag.faceDisplayBounds, struct.pack('<HHHH H', x, y, w, h, scale))
 				if 'officialKeyNames' in props:
