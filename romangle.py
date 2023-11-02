@@ -124,7 +124,7 @@ def scan(f):
 		for de in os.listdir(f):
 			scan('%s/%s' % (f, de))
 	else:
-		match = re.findall(r'[EC]Y-?[0-9]{3}', f)
+		match = re.findall(r'[EC]Y-?[0-9]{2,3}[A-D]', f)
 		if len(match):
 			nm = match[0].replace('-', '')
 			if nm not in assets:
