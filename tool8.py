@@ -7,7 +7,7 @@ try:
 	import chafa
 	from PIL import Image
 	import io
-	import importlib
+	import importlib.util
 	can_draw_image = True
 	def draw_image(img):
 		img_pil = Image.open(io.BytesIO(img))
@@ -27,7 +27,7 @@ try:
 		    img_pil.width * 4
 		)
 		print(canvas.print(fallback = True).decode())
-	if importlib.find_loader('cairosvg'):
+	if importlib.util.find_spec('cairosvg'):
 		can_draw_svg = True
 		def draw_svg(svg):
 			from cairosvg import svg2png
