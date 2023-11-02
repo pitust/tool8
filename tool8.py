@@ -77,11 +77,12 @@ ROM8_COMPAT_MAP = {
 		8: ROM8Tag.faceKeymap,
 		9: ROM8Tag.calcType,
 		10: ROM8Tag.faceKeybinds,
-	}
+	},
+	'pitust,3': None
 }
 
 
-SUPPORTED_ROM8 = b'pitust,2'
+SUPPORTED_ROM8 = b'pitust,3'
 
 def read8(data):
 	if type(data) == str:

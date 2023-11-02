@@ -101,7 +101,7 @@ class write8:
 	def prop(self, k, v):
 		self.write(ROM8Tag.prop, b'%s=%s' % (k.encode(), v.encode()))
 
-SUPPORTED_ROM8 = b'pitust,2'
+SUPPORTED_ROM8 = b'pitust,3'
 assets = {}
 
 def identify(fn):
@@ -138,6 +138,9 @@ def scan(f):
 			assets[nm][t] = open(f, 'rb').read()
 
 def fromkio(ki, ko):
+	if ki == 0 or ko == 0:
+		assert ki == ko
+		return 0x80 # ControlKeysym.ON
 	assert (ki-1)&ki == 0
 	assert (ko-1)&ko == 0
 
