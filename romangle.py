@@ -182,6 +182,9 @@ def cmd_mangle(*, i, o = 'roms'):
 						wr.write(ROM8Tag.faceDisplayBounds, struct.pack('<HHHH H', x, y, w, h, scale))
 					else:
 						print('W: no svg face for %s' % id)
+						wr.write(ROM8Tag.faceDisplayBounds, struct.pack('<HHHH H', 0, 0, 192, 63, 2))
+				else:
+					wr.write(ROM8Tag.faceDisplayBounds, struct.pack('<HHHH H', 0, 0, 192, 63, 2))
 				if 'officialKeyNames' in props:
 					keybinds = b''
 					keymap = b''
