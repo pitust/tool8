@@ -154,6 +154,8 @@ def cmd_mangle(*, i, o = 'roms'):
 	if '%s' not in rompath:
 		rompath += '/%s.rom8'
 
+	print('I: romangle v1')
+
 	for idir in i.split(','):
 		scan(idir)
 	for id, props in assets.items():
