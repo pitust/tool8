@@ -174,7 +174,6 @@ def cmd_mangle(*, i, o = 'roms'):
 					svg = svg.replace('width="375" height="635" viewBox="0 0 375 635"', 'width="750" height="1270" viewBox="0 0 375 635"')
 					wr.write(ROM8Tag.faceSVG, svg.encode())
 
-					print('romangle v2 doing face')
 					x, y = 80, 89
 					w, h = 192, 63
 					scale = 3
