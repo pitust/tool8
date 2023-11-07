@@ -176,11 +176,20 @@ def cmd_mangle(*, i, o = 'roms'):
 					if 'width=' not in svg[:1000]:
 						svg = svg.replace('viewBox="', 'width="375" height="635" viewBox="')
 					svg = svg.replace('width="376" height="635" viewBox="0 0 376 635"', 'width="375" height="635" viewBox="0 0 375 635"')
+					svg = svg.replace('width="368" height="635" viewBox="0 0 368 635"', 'width="367" height="635" viewBox="0 0 367 635"')
 					if 'width="375" height="635" viewBox="0 0 375 635"' in svg:
 						svg = svg.replace('width="375" height="635" viewBox="0 0 375 635"', 'width="750" height="1270" viewBox="0 0 375 635"')
 						wr.write(ROM8Tag.faceSVG, svg.encode())
 
 						x, y = 86, 108
+						w, h = 192, 63
+						scale = 3
+						wr.write(ROM8Tag.faceDisplayBounds, struct.pack('<HHHH H', x, y, w, h, scale))
+					elif 'width="367" height="635" viewBox="0 0 367 635"' in svg:
+						svg = svg.replace('width="367" height="635" viewBox="0 0 367 635"', 'width="734" height="1270" viewBox="0 0 367 635"')
+						wr.write(ROM8Tag.faceSVG, svg.encode())
+
+						x, y = 79, 90
 						w, h = 192, 63
 						scale = 3
 						wr.write(ROM8Tag.faceDisplayBounds, struct.pack('<HHHH H', x, y, w, h, scale))
