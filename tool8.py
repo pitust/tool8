@@ -37,6 +37,7 @@ try:
 
 except ImportError:
 	can_draw_image = False
+	can_draw_svg = False
 class ROM8Tag(enum.IntEnum):
 	end = 0
 	compatible = enum.auto()
@@ -284,6 +285,12 @@ def cmd_show(*, file):
 			for i in range(0, len(data), 10):
 				x, y, w, h, kc = struct.unpack('<HHHH H', data[i:i + 10])
 				print('  - %d, %d %dx%d: keycode 0x%02x' % (x, y, w, h, kc))
+		elif t == ROM8Tag.faceKeybinds:
+			print('- key bindings:')
+			for i in range(0, len(data), 2):
+				a = data[i + 0]
+				b = data[i + 1]
+				print('  - kc %s => 0x%02x' % (chr(a), b))
 		elif t == ROM8Tag.faceKeymap:
 			print('- keymap:')
 			for ks, name in readkeys(data):
